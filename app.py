@@ -59,7 +59,7 @@ def clearCache():
 			try:
 				timeCreated = int(fileName.split("_")[0])		#创建时间
 				if (currentTime - timeCreated) > 600:			#间隔时间(秒)
-					if fileName.endswith(".wav"):
+					if fileName.endswith(".ogg"):
 						remove(tempOutputPath + fileName)
 			#若文件名不符合格式，(currentTime - timeCreated)会报错
 			except:
@@ -97,7 +97,7 @@ def HZYSS():
 	#记录日志
 	app.logger.debug("%s", request.form)
 	#特殊情况不予生成音频并返回错误代码
-	if (len(rawData) > 100):
+	if (len(rawData) > 150):
 		return jsonify({"code": 400, "message": "憋刷辣！"}), 400
 	if (speedMult < 0.5) or (speedMult > 2) or (pitchMult < 0.5) or (pitchMult > 2):
 		return jsonify({"code": 400, "message": "你在搞什么飞机？"}), 400
@@ -108,7 +108,7 @@ def HZYSS():
 		HZYS = huoZiYinShua("./settings.json")
 		#导出音频
 		HZYS.export(rawData,
-					filePath=tempOutputPath+id+".wav",
+					filePath=tempOutputPath+id+".ogg",
 					inYsddMode=inYsddMode,
 					norm=norm,
 					reverse=reverse,
@@ -124,14 +124,14 @@ def HZYSS():
 
 
 #用户发出下载音频的请求
-@app.route('/get/<id>.wav')
+@app.route('/get/<id>.ogg')
 def get_audio(id):
 	try:
-		with open(tempOutputPath+id+".wav", 'rb') as f:
+		with open(tempOutputPath+id+".ogg", 'rb') as f:
 			audio = f.read()
 		response = make_response(audio)
 		f.close()
-		response.content_type = "audio/wav"
+		response.content_type = "audio/ogg"
 		return response
 	except:
 		return render_template("fileNotFound.html"), 404
@@ -139,4 +139,4 @@ def get_audio(id):
 
 if __name__ == '__main__':
 	Thread(target=clearCache, args=( )).start()
-	app.run(port=8989,host='0.0.0.0')
+	app.run(port=831,host='0.0.0.0',ssl_context=('/path/to/fullchain.pem','/path/to/privkey.pem'))

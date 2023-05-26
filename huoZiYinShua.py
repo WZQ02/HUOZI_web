@@ -135,6 +135,9 @@ class huoZiYinShua:
 		self.__concatenate(rawData, inYsddMode, pitchMult, speedMult, norm, reverse)
 		self.__export(filePath)
 		print("已导出到" + filePath + "下")
+		#txtfilePath = filePath + ".txt"
+		txtfilePath = "./tempAudioOutput/typedquotes.txt"
+		open(txtfilePath,'a+').write("\r\n" + rawData)
 	
 	
 	
