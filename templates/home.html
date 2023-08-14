@@ -5,14 +5,14 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="icon" type="image/x-icon" href="/static/lizi.ico">
+	<link rel="icon" type="image/x-icon" href="static/lizi.ico">
 	<title>在线生成otto鬼叫</title>
-	<link rel="stylesheet" href="/static/bootstrap.min.css"
+	<link rel="stylesheet" href="static/bootstrap.min.css"
 		integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-	<script src="/static/jquery-3.6.1.js"></script>
+	<script src="static/jquery-3.6.1.js"></script>
 	<style type="text/css">
 		body {
-			background: url(/static/otto.jpg);
+			background: url(static/otto.jpg);
 			background-size: cover;
 			background-size: 100% 100vh;
 			font-family: "HarmonyOS Sans SC","Century Gothic","Noto Sans","Source Han Sans CN","Microsoft YaHei",微软雅黑,"Microsoft JhengHei","Segoe UI" !important;
@@ -56,9 +56,9 @@
 	<div class="container">
 		<h1 style="text-align: center;">♿活字印刷术在线版♿</h1>
 		<picture>
-			<source srcset="/static/lizi.webp" type="image/webp">
-			<source srcset="/static/lizi.png" type="image/png">
-			<img src="/static/lizi.png" alt="栗子头" width="100px" height="100px">
+			<source srcset="static/lizi.webp" type="image/webp">
+			<source srcset="static/lizi.png" type="image/png">
+			<img src="static/lizi.png" alt="栗子头" width="100px" height="100px">
 		</picture>
 		<!-- 生成鬼叫 -->
 		<button class="btn btn-success" onclick="make_audio();">生成OTTO鬼叫</button>
@@ -153,6 +153,8 @@
 			//创建xmlhttprequest实例
 			const Http = new XMLHttpRequest();
 			const url = '/make';
+			const domain = window.location.href;//指定域名变量，避免在/ottohzys站点访问时无法正常生成音频
+			const url2 = domain + url;
 
 			//定义收到回应的动作
 			Http.onreadystatechange = function () {
@@ -161,7 +163,7 @@
 					if(this.status == 200){
 						data = JSON.parse(this.response);
 						//生成url
-						audio_url = "/get/" + data.id + ".ogg";
+						audio_url = domain + "/get/" + data.id + ".ogg";
 						//生成音频标签
 						$("#audio").html(
 							"<source type='audio/ogg' src='" + audio_url + "' />"
@@ -182,7 +184,7 @@
 			};
 
 			//发送请求
-			Http.open("POST", url, false);
+			Http.open("POST", url2, false);
 			Http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
 			Http.send(body);
 		};
