@@ -22,7 +22,7 @@
             border-radius: 12px;
             backdrop-filter: blur(24px);
             box-shadow: 0px 0px 16px rgba(0,0,0,0.25);
-            animation: fall 0.5s cubic-bezier(0, 0.67, 0, 1) 1;
+            animation: popup 0.5s cubic-bezier(0, 0.67, 0, 1) 1;
         }
         .container img {
             animation: spin 4s linear infinite;
@@ -38,15 +38,13 @@
                 transform: rotate(360deg);
             }
         }
-        @keyframes fall {
+        @keyframes popup {
             from {
-                position: relative;
-                top: -256px; 
+                scale: 0.85;
                 opacity: 0.0;
             }
             to {
-                position: relative;
-                top: 0px; 
+                scale: 1;
                 opacity: 1.0;
             }
         }
@@ -62,16 +60,17 @@
 		</picture>
 		<!-- 生成鬼叫 -->
 		<button class="btn btn-success" onclick="make_audio();">生成OTTO鬼叫</button>
-		<button class="btn btn-primary" onclick="window.location.href = 'https://otto-hzys.kaga.ga/';">新版 (作者: 会唱歌的花枝丸)</button>
-		<button class="btn btn-primary" onclick="window.location.href = 'https://github.com/DSP-8192/HUOZI_web';">原项目 GitHub 仓库 (作者: DSP-8192 & sakaneko117)</button>
-		<!--<button class="btn btn-primary" onclick="window.location.href = 'https://ottomania.ottomad.com/';">关注 ottomania 喵，关注 ottomania 活动谢谢喵</button>-->
-		<button class="btn btn-primary" onclick="window.location.href = 'https://wzq02.cf?secquery=demos';">返回主站</button>
+		<button class="btn btn-primary" onclick="window.location.href = 'https\:\/\/github.com/DSP-8192/HUOZI_web';">原项目 GitHub 仓库 (作者: DSP-8192 & sakaneko117)</button>
+		<!--<button class="btn btn-primary" onclick="window.location.href = 'http://www.ottomania2024.xyz';">关注 ottomania 喵，关注 ottomania 活动谢谢喵</button>-->
+		<button class="btn btn-primary" onclick="window.location.href = 'https\:\/\/wzq02.top/#/demos';">返回主页</button>
+		<button class="btn btn-primary" onclick="window.location.href = 'https\:\/\/demo.wzq02.top/youareanidiot';" style="display:none;" id="youare">你是？</button>
 		<!-- 文本框 -->
 		<label for="text"></label><textarea maxlength="150" id="text" class="form-control"
 			style="height: 150px;"></textarea>
 		<!-- 生成选项 -->
+		<p>已知问题：部分小米手机自带浏览器使用本站音频生成时疑似放不出声音，建议更换为其他 Chromium 系浏览器。</p>
 		<p>由于服务器资源有限，之前多次出现因生成字数太多导致服务异常退出的情况，现将单次生成字数限制在 150 字以内。</p>
-		<p><input type="checkbox" id="ysdd" />匹配到特定文字时使用原声大碟 (目前支持：大家好啊 我是说的道理 今天来点大家想看的东西 说的道理 啊米浴说的道理 啊嘛波比是我爹 哇袄 哈比下 欧内的手 好汉 安修 奥克苏恩 奥利安费 哈里路大旋风 为什么 为什么呀 击败 炫狗 尊尼获嘉 原子弹 冲刺 奥利奥利安 密麻麻石蜡 哈姆 乌兹 yyds 一坨史 我释放忍术 吓我一跳我释放忍术 影分身十字斩 纳米悠悠球 1! 5!)</p>
+		<p><input type="checkbox" id="ysdd" />匹配到特定文字时使用原声大碟 (目前支持：大家好啊 我是说的道理 今天来点大家想看的东西 说的道理 啊米浴说的道理 啊嘛波比是我爹 哇袄 哈比下 欧内的手 好汉 安修 奥克苏恩 奥利安费 哈里路大旋风 为什么 为什么呀 击败 炫狗 尊尼获嘉 原子弹 冲刺 奥利奥利安 密麻麻石蜡 哈姆 乌兹 yyds 一坨史 我释放忍术 吓我一跳我释放忍术 影分身十字斩 纳米悠悠球 1! 5! 踩踩背)</p>
 		<p><input type="checkbox" id="reverse" /> 倒放生成的音频</p>
 		<p><input type="checkbox" id="norm" /> 统一音频的音量</p>
 		<p><text id="speedMultDisp">速度：1</text><input type="range" id="speedMult" min="0.5" max="2" value="1" step="0.1"
@@ -89,42 +88,6 @@
 			</audio>
 			<!-- 下载 链接指向audio_url -->
 			<p><a class="btn btn-primary" onclick="window.open(audio_url); return false;">下载音频</a></p>
-			<!--<audio autoplay id="hlmml">
-				<source type='audio/wav' src="/static/hlmml.wav" />
-			</audio>-->
-			<!-- 常用素材 
-			<h3>大家好啊</h3>
-			<audio controls id="djh">
-				<source type='audio/wav' src="/static/djha.wav" />
-			</audio>
-			<h3>我是说的道理</h3>
-			<audio controls id="wssddl">
-				<source type='audio/wav' src="/static/wssddl.wav" />
-			</audio>
-			<h3>今天来点大家想看的东西</h3>
-			<audio controls id="jt">
-				<source type='audio/wav' src="/static/jtlaidian.wav" />
-			</audio>
-			<h3>说的道理</h3>
-			<audio controls id="sddl">
-				<source type='audio/wav' src="/static/sddl.wav" />
-			</audio>
-			<h3>米浴</h3>
-			<audio controls id="miyu">
-				<source type='audio/wav' src="/static/miyu.wav" />
-			</audio>
-			<h3>波比</h3>
-			<audio controls id="bobi">
-				<source type='audio/wav' src="/static/bobi.wav" />
-			</audio>
-			<h3>浮夸</h3>
-			<audio controls id="fukua">
-				<source type='audio/wav' src="/static/fukua.wav" />
-			</audio>
-			<h3>完整版</h3>
-			<audio controls id="full">
-				<source type='audio/wav' src="/static/fullver.wav" />
-			</audio>-->
 		</div>
 	</div>
 
@@ -188,6 +151,10 @@
 			Http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
 			Http.send(body);
 		};
+		
+		if (Math.random() > 0.8) {
+		    document.getElementById("youare").style = "";
+		}
 	</script>
 </body>
 
